@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 from flask import Flask, jsonify
 from .config import config_map, DevelopmentConfig
 from .extensions import database, marshmallow_extension, cors
@@ -9,7 +10,9 @@ logger = logging.getLogger(__name__)
 
 
 def create_app(config_name: str = "development") -> Flask:
-    app = Flask(__name__)
+    app = Flask(__name__, instance_relative_config=True)
+    app.instance_path = str(Path(__file__).resolve().parents[1] / "instance")
+    Path(app.instance_path).mkdir(exist_ok=True)
 
     config_class = config_map.get(config_name, DevelopmentConfig)
     app.config.from_object(config_class)

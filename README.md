@@ -17,6 +17,16 @@ cp .env.example .env
 flask --app app run --debug        # API on http://localhost:5000
 ```
 
+### Backend (Windows PowerShell)
+```powershell
+cd backend
+py -3.11 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements-dev.txt
+copy .env.example .env
+flask --app app run --debug
+```
+
 ### Frontend
 ```bash
 cd frontend

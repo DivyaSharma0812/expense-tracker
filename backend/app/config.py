@@ -1,4 +1,11 @@
 import os
+from pathlib import Path
+
+
+BASE_DIR = Path(__file__).resolve().parents[1]
+INSTANCE_DIR = BASE_DIR / "instance"
+INSTANCE_DIR.mkdir(exist_ok=True)
+DEFAULT_DATABASE_URI = f"sqlite:///{INSTANCE_DIR / 'expense_tracker.db'}"
 
 
 class Config:
@@ -10,9 +17,7 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = os.environ.get(
-        "DATABASE_URL", "sqlite:///expense_tracker.db"
-    )
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL", DEFAULT_DATABASE_URI)
 
 
 class TestingConfig(Config):
